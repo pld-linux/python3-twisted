@@ -60,7 +60,7 @@ servers, mail servers and more.
 %build
 CC="%{__cc}" \
 CFLAGS="%{rpmcppflags} %{rpmcflags}" \
-%{__python} setup.py build
+%py_build
 
 %if %{with tests}
 # bin/trial twisted
@@ -70,10 +70,7 @@ CFLAGS="%{rpmcppflags} %{rpmcflags}" \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__python} setup.py install \
-	--skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
+%py_install
 
 %{__rm} -r $RPM_BUILD_ROOT%{py_sitedir}/twisted/*/test
 
