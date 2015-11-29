@@ -9,6 +9,7 @@ Group:		Libraries/Python
 Source0:	http://twistedmatrix.com/Releases/Twisted/14.0/Twisted-%{version}.tar.bz2
 # Source0-md5:	8379eb15601d6b7543a189594d3fed8f
 URL:		http://twistedmatrix.com/
+BuildRequires:	rpmbuild(macros) >= 1.710
 Patch0:		doc-lore-man-fix.patch
 BuildRequires:	Zope-Interface >= 3.6.0
 BuildRequires:	python-Crypto >= 2.6.1
