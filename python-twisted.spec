@@ -1,6 +1,7 @@
 # TODO
 # - split back to subpackages (python-tkinter, etc deps)
-Summary:	Twisted is a networking engine written in Python
+Summary:	Twisted - a networking engine written in Python
+Summary(pl.UTF-8):	Twisted - silnik sieciowy napisany w Pythonie
 Name:		python-twisted
 Version:	14.0.2
 Release:	0.2
@@ -11,12 +12,12 @@ Source0:	http://twistedmatrix.com/Releases/Twisted/14.0/Twisted-%{version}.tar.b
 URL:		http://twistedmatrix.com/
 BuildRequires:	rpmbuild(macros) >= 1.710
 Patch0:		doc-lore-man-fix.patch
-BuildRequires:	Zope-Interface >= 3.6.0
 BuildRequires:	python-Crypto >= 2.6.1
 BuildRequires:	python-devel >= 2.6
 BuildRequires:	python-pyOpenSSL >= 0.10
-Requires:	Zope-Interface >= 3.6.0
+BuildRequires:	python-zope.interface >= 3.6.0
 Requires:	python-pyOpenSSL >= 0.10
+Requires:	python-zope.interface >= 3.6.0
 # python-TwistedConch
 Requires:	python-Crypto
 Requires:	python-pyasn1
@@ -54,13 +55,16 @@ Twisted is a networking engine written in Python, supporting numerous
 protocols. It contains a web server, numerous chat clients, chat
 servers, mail servers and more.
 
+%description -l pl.UTF-8
+Twisted to napisany w Pythonie silnik sieciowy, obsługujący wiele
+protokołów. Zawiera serwer WWW, wiele klientów czatów, serwery czatów,
+serwery pocztowe itp.
+
 %prep
 %setup -q -n Twisted-%{version}
 %patch0 -p1
 
 %build
-CC="%{__cc}" \
-CFLAGS="%{rpmcppflags} %{rpmcflags}" \
 %py_build
 
 %if %{with tests}
@@ -71,6 +75,7 @@ CFLAGS="%{rpmcppflags} %{rpmcflags}" \
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %py_install
 
 %{__rm} -r $RPM_BUILD_ROOT%{py_sitedir}/twisted/*/test
