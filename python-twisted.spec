@@ -142,9 +142,7 @@ serwery pocztowe itp.
 Summary:	Documentation for Twisted networking engine
 Summary(pl.UTF-8):	Dokumentacja do silnika sieciowego Twisted
 Group:		Documentation
-%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 Documentation for Twisted networking engine.
