@@ -12,7 +12,7 @@ Summary:	Twisted - a networking engine written in Python
 Summary(pl.UTF-8):	Twisted - silnik sieciowy napisany w Pythonie
 Name:		python-twisted
 Version:	20.3.0
-Release:	2
+Release:	3
 License:	MIT
 Group:		Libraries/Python
 Source0:	http://twistedmatrix.com/Releases/Twisted/20.3/Twisted-%{version}.tar.bz2
