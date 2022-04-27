@@ -11,13 +11,14 @@
 Summary:	Twisted - a networking engine written in Python
 Summary(pl.UTF-8):	Twisted - silnik sieciowy napisany w Pythonie
 Name:		python-twisted
+# keep 20.x here for python2 support
 Version:	20.3.0
 Release:	5
 License:	MIT
 Group:		Libraries/Python
-Source0:	http://twistedmatrix.com/Releases/Twisted/20.3/Twisted-%{version}.tar.bz2
+Source0:	https://twistedmatrix.com/Releases/Twisted/20.3/Twisted-%{version}.tar.bz2
 # Source0-md5:	fc16d575730db7d0cddd09fc35af3eea
-URL:		http://twistedmatrix.com/
+URL:		https://twistedmatrix.com/
 %if %{with python2}
 BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	python-incremental >= 16.10.1
@@ -78,8 +79,11 @@ BuildRequires:	python3-pyOpenSSL >= 16.0.0
 BuildRequires:	python3-service_identity >= 18.1.0
 %endif
 %endif
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.714
+%if %{with doc}
 BuildRequires:	sphinx-pdg >= 1.3.1
+%endif
 Requires:	python-pyOpenSSL >= 0.10
 Requires:	python-zope.interface >= 3.6.0
 # python-TwistedConch
