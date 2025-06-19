@@ -10,16 +10,22 @@
 Summary:	Twisted - a networking engine written in Python
 Summary(pl.UTF-8):	Twisted - silnik sieciowy napisany w Pythonie
 Name:		python3-twisted
-Version:	22.4.0
-Release:	2
+Version:	25.5.0
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/Twisted/
-Source0:	https://files.pythonhosted.org/packages/source/T/Twisted/Twisted-%{version}.tar.gz
-# Source0-md5:	f75194d2beb4d9bd0f0f02d6a2eff245
+Source0:	https://files.pythonhosted.org/packages/source/t/twisted/twisted-%{version}.tar.gz
+# Source0-md5:	845d6782c2236ef764f3849948f4bfad
+Source1:	https://raw.githubusercontent.com/twisted/twisted/refs/tags/twisted-%{version}/setup.cfg
+# Source1-md5:	7853a82dfd42b7c399c7d9327b7f4279
 URL:		https://twistedmatrix.com/
-BuildRequires:	python3-modules >= 1:3.7
-BuildRequires:	python3-setuptools
+BuildRequires:	python3-build
+BuildRequires:	python3-hatchling >= 1.10.0
+BuildRequires:	python3-hatch-fancy-pypi-readme >= 22.5.0
+BuildRequires:	python3-incremental >= 24.7.0
+BuildRequires:	python3-installer
+BuildRequires:	python3-modules >= 1:3.8
 %if %{with tests}
 BuildRequires:	python3-attrs >= 19.2.0
 BuildRequires:	python3-automat >= 0.8.0
@@ -28,7 +34,6 @@ BuildRequires:	python3-constantly >= 15.1
 BuildRequires:	python3-cython-test-exception-raiser >= 1.0.2
 BuildRequires:	python3-cython-test-exception-raiser < 2
 BuildRequires:	python3-hyperlink >= 17.1.1
-BuildRequires:	python3-incremental >= 21.3.0
 BuildRequires:	python3-pyhamcrest >= 1.9.0
 BuildRequires:	python3-zope.interface >= 4.4.2
 # conch
@@ -50,7 +55,7 @@ BuildRequires:	python3-idna >= 2.4
 BuildRequires:	python3-pyOpenSSL >= 16.0.0
 BuildRequires:	python3-service_identity >= 18.1.0
 %endif
-BuildRequires:	rpmbuild(macros) >= 1.714
+BuildRequires:	rpmbuild(macros) >= 2.044
 %if %{with doc}
 # TODO
 BuildRequires:	python3-pydoctor >= 21.9.0
@@ -58,7 +63,7 @@ BuildRequires:	python3-sphinx_rtd_theme >= 0.5
 BuildRequires:	python3-readthedocs-sphinx-ext >= 2.1
 BuildRequires:	sphinx-pdg >= 4.1.2
 %endif
-Requires:	python3-modules >= 1:3.7
+Requires:	python3-modules >= 1:3.8
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -84,12 +89,14 @@ Documentation for Twisted networking engine.
 Dokumentacja do silnika sieciowego Twisted.
 
 %prep
-%setup -q -n Twisted-%{version}
+%setup -q -n twisted-%{version}
+
+cp -p %{SOURCE1} .
 
 %{__sed} -i -e '/^_git_reference =/,/^)/ c _git_reference="%{version}"' docs/conf.py
 
 %build
-%py3_build
+%py3_build_pyproject
 
 %if %{with tests}
 PYTHONPATH=$(pwd)/src \
@@ -105,7 +112,7 @@ PYTHONPATH=$(pwd)/src \
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 
-%py3_install
+%py3_install_pyproject
 
 %{__rm} -r $RPM_BUILD_ROOT%{py3_sitescriptdir}/twisted/*/test
 %{__rm} $RPM_BUILD_ROOT%{py3_sitescriptdir}/twisted/python/twisted-completion.zsh
@@ -137,7 +144,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/twist-3
 %attr(755,root,root) %{_bindir}/twistd-3
 %{py3_sitescriptdir}/twisted
-%{py3_sitescriptdir}/Twisted-%{version}-py*.egg-info
+%{py3_sitescriptdir}/twisted-%{version}.dist-info
 %{_mandir}/man1/cftp-3.1*
 %{_mandir}/man1/ckeygen-3.1*
 %{_mandir}/man1/conch-3.1*
